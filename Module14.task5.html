@@ -1,0 +1,76 @@
+<!-- Задание выполнял с VPN -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Module14.task-5</title>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const pageNumberInput = document.getElementById("pageNumber");
+      const limitInput = document.getElementById("limit");
+      const resultMessage = document.getElementById("result");
+      const imageList = document.getElementById("imageList");
+
+      // Загрузка данных из localStorage при старте приложения
+
+      const lastRequest = localStorage.getItem("lastRequest");
+      if (lastRequest) {
+        sendRequest(lastRequest);
+      }
+
+      // Обработчик клика на кнопку "Запрос"
+      
+      document.getElementById("submitButton").addEventListener("click", () => {
+        const pageNumber = parseInt(pageNumberInput.value);
+        const limit = parseInt(limitInput.value);
+
+        if (isNaN(pageNumber)  isNaN(limit)  pageNumber < 1  pageNumber > 10  limit < 1 || limit > 10) {
+
+          // Вывод сообщения об ошибке, если введены некорректные значения
+
+          resultMessage.textContent = "Номер страницы и/или лимит вне диапазона от 1 до 10";
+          return;
+        }
+
+        const url = `https://picsum.photos/v2/list?page=${pageNumber}&limit=${limit}`;
+        sendRequest(url);
+      });
+
+      // Функция для отправки запроса и вывода списка картинок
+
+      function sendRequest(url) {
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            imageList.innerHTML = "";
+
+            data.forEach(item => {
+              const img = document.createElement("img");
+              img.src = item.download_url;
+              img.style.width = "200px";
+              img.style.margin = "5px";
+              imageList.appendChild(img);
+            });
+
+            // Сохранение успешно выполненного запроса в localStorage
+            
+            localStorage.setItem("lastRequest", url);
+            resultMessage.textContent = "";
+          })
+.catch(error => {
+            console.log("Ошибка при выполнении запроса:", error);
+          });
+      }
+    });
+  </script>
+</head>
+<body>
+    <h1>Приложение для запроса изображений</h1>
+    <label for="pageNumber">Номер страницы:</label>
+        <input type="text" id="pageNumber"><br>
+    <label for="limit">Лимит:</label>
+        <input type="text" id="limit"><br>
+    <button id="submitButton">Запрос</button><br>
+    <p id="result"></p>
+    <div id="imageList"></div>
+</body>
+</html>

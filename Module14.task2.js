@@ -1,25 +1,5 @@
 // Вариант 1.
 
-const jsonString = `{
-    "list": [
-      {
-        "name": "Petr",
-        "age": "20",
-        "prof": "mechanic"
-      },
-      {
-        "name": "Vova",
-        "age": "60",
-        "prof": "pilot"
-      }
-    ]
-  }`;
-  
-  const jsObject = JSON.parse(jsonString);
-  console.log(jsObject);
-
-// Вариант 2.
-
     // Запись заготовки в JSON строку
 const jsonString2 = `{
     "list": [
@@ -58,3 +38,23 @@ const jsonString2 = `{
   
   const convertedObject = convertJSONToJSObject(jsonString2);
   console.log(convertedObject);
+
+  // Вариант 2.
+
+const jsonString = `{
+  "list": [
+    {
+      "name": "Petr",
+      "age": "20",
+      "prof": "mechanic"
+    },
+    {
+      "name": "Vova",
+      "age": "60",
+      "prof": "pilot"
+    }
+  ]
+}`;
+
+const jsObject = JSON.parse(jsonString);
+console.log(jsObject);
